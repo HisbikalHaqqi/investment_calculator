@@ -1,0 +1,1 @@
+{"version":1,"functions":{"/api/forgot-password/verify-token":{},"/forgot-password":{},"/_not-found":{},"/error":{},"/signin":{},"/signup":{},"/contact":{},"/about":{},"/pricing":{},"/reset-password/[token]":{},"/":{}}}
