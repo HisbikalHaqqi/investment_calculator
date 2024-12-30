@@ -214,8 +214,6 @@ const Pricing = () => {
     const validationResult = validatePersentase(value);
     switch(component) {
       case 'sukuBunga':
-        console.log(validationResult)
-        console.log(value)
         if (validationResult === true) {
           setNumSukuBunga(value);  
           setErrorSukuBunga(false); 
@@ -611,7 +609,6 @@ const Pricing = () => {
                       <TextField
                         id="outlined-helperText"
                         label="Usia Ekonomis (Tahun)"
-                        defaultValue="5"
                         value={numRows}
                         error={errorTahun}
                         onChange={handleTahunNumChange}
@@ -631,7 +628,6 @@ const Pricing = () => {
                       id="outlined-helperText"
                       label="Tingkat Suku Bunga (0.0) (%)"
                       value={numSukuBunga}
-                      defaultValue={'0'}
                       onBlur={() => handleValidationPresentase('sukuBunga',numSukuBunga)}
                       onChange={handleSukuBungaChange}
                       helperText={errorSukuBunga ? helperSukuBunga : ''}
@@ -649,7 +645,6 @@ const Pricing = () => {
                     <TextField
                       id="outlined-helperText"
                       label="Nilai Sisa"
-                      defaultValue="0"
                       value={numNilaiSisa}
                       onChange={handleNilaiSisa}
                       helperText={errorNilaiSisa ? helperTextNumNilaiSisa : ''}
@@ -689,7 +684,6 @@ const Pricing = () => {
                     <TextField
                       id="outlined-helperText"
                       label="Syarat Payback (Tahun)"
-                      defaultValue="0"
                       value={numPayback}
                       onChange={handlePayback}
                       helperText={errorPayback ? helperTextNumPayback : ''}
@@ -743,10 +737,10 @@ const Pricing = () => {
                                 
                                     {Array.from({ length: numRows }).map((_, colIndex) => (
                                       <TableRow key={colIndex}>
-                                            <TableCell key={colIndex}>
+                                            <TableCell >
                                               Tahun Ke - {colIndex + 1}
                                             </TableCell>
-                                            <TableCell key={colIndex}>
+                                            <TableCell >
                                               <TextField
                                                 fullWidth
                                                 value={rows[colIndex] || ''} 

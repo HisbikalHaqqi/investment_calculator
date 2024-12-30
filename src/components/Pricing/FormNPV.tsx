@@ -68,12 +68,12 @@ function FormNPV() {
               <TableHead>
               {headerTableNPV.map((title, colIndex) => (
                 <TableRow key={colIndex}>
-                    <TableCell key={colIndex}>
+                    <TableCell>
                       <Typography variant="h6" component="h4">
                         {title}
                       </Typography>
                     </TableCell>
-                    <TableCell key={colIndex}>
+                    <TableCell>
                       { title ===   "Suku Bunga" ? (
                         <TextField
                           disabled

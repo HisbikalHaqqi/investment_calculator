@@ -51,7 +51,7 @@ function TableAliranKasMasuk({numRows}:{numRows: number}) {
               <TableRow key={rowIndex}>
       
                 {dataArray.map((item:string, index: number) => (
-                  <div>
+                  <div key={index}>
                     <TableCell>Tahun Ke - {index+1}</TableCell>
                     <TableCell key={index}>
                       <TextField
@@ -64,7 +64,7 @@ function TableAliranKasMasuk({numRows}:{numRows: number}) {
                       />
                     </TableCell>
                     {headerPenyusutanGarisLurus.map((title, colIndex) => (
-                      <TableCell key={colIndex}>
+                      <TableCell key={rowIndex}>
                         {title === 'Debet Penyusutan' ? (
                           <TextField
                             disabled
@@ -88,7 +88,8 @@ function TableAliranKasMasuk({numRows}:{numRows: number}) {
                     ))}
                   </div>
                   
-                ))}
+                )
+                )}
               </TableRow>
             ))}
           </TableBody>

@@ -21,23 +21,28 @@ function FormDepresiasiSaldoMenurun({ numRows }: { numRows: number }) {
 
   const handlePenyusutanChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
-    const validationResult = validatePersentase(value);
-
-    
-
-    if (validationResult === true) {
-      setNumPenyusutan(value);
-      setErrorPenyusutan(false);
-      setHelperPenyusutan('');
-    } else {
-      setErrorPenyusutan(true);
-      setHelperPenyusutan(validationResult);
-    }
+    setNumPenyusutan(value);
   };
 
   const hitungTingkatPenyusutan = () => {
     var tempDepresiasi = (pembelianAktivaTetapNum * Number(numPenyusutan)) / 100
     return tempDepresiasi
+  }
+
+  const handleValidatePresentase = (component:string,value:string) => {
+    const validationResult = validatePersentase(value);
+    switch(component) {
+      case 'depresiasi':
+        if (validationResult === true) {
+          setNumPenyusutan(value);
+          setErrorPenyusutan(false);
+          setHelperPenyusutan('');
+        } else {
+          setErrorPenyusutan(true);
+          setHelperPenyusutan(validationResult as string);
+        }
+        break;
+    }
   }
 
   return (
@@ -58,9 +63,9 @@ function FormDepresiasiSaldoMenurun({ numRows }: { numRows: number }) {
             <TextField
               id="outlined-helperText"
               label="Tingkat Depresiasi %"
-              defaultValue="5"
               value={numPenyusutan}
               onChange={handlePenyusutanChange}
+              onBlur={()=>{handleValidatePresentase('depresiasi',numPenyusutan)}}
               helperText={errorPenyusutan ? helperPenyusutan : ''}
               error={errorPenyusutan}
             />
