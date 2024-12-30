@@ -44,7 +44,7 @@ const Pricing = () => {
   const [helperTahun, setHelperTahun] = useState<string>('');
   const [helperTextNumNilaiSisa, setHelperTextNumNilaiSisa] = useState<string>('');
   const [helperTextNumPayback, setHelperTextNumPayback] = useState<string>('');
-  const [showFormNext, setFormNext] = useState<boolean>(true);
+  const [showFormNext, setFormNext] = useState<boolean>(false);
   const [helperTextNumRasio1, setHelperRasihelperTextNumRasio1] = useState<string>('');
   const [helperTextNumReinvestmentRate, setHelperTextNumReinvestmentRate] = useState<string>('');
   
