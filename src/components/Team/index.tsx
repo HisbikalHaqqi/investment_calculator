@@ -30,15 +30,15 @@ const teamData: TeamType[] = [
     twitterLink: "/#",
     instagramLink: "/#",
   },
-  {
-    id: 4,
-    name: "Eko Agustina",
-    designation: "66 PLSI / MMSI",
-    image: "/images/team/team-04.jpg",
-    facebookLink: "/#",
-    twitterLink: "/#",
-    instagramLink: "/#",
-  },
+  // {
+  //   id: 4,
+  //   name: "Eko Agustina",
+  //   designation: "66 PLSI / MMSI",
+  //   image: "/images/team/team-04.jpg",
+  //   facebookLink: "/#",
+  //   twitterLink: "/#",
+  //   instagramLink: "/#",
+  // },
   {
     id: 5,
     name: "M. Reyhan Dwi Rama",
@@ -48,15 +48,15 @@ const teamData: TeamType[] = [
     twitterLink: "/#",
     instagramLink: "/#",
   },
-  {
-    id: 5,
-    name: "M. Rafi Rafsanzani",
-    designation: "66 PLSI / MMSI",
-    image: "/images/team/team-05.jpg",
-    facebookLink: "/#",
-    twitterLink: "/#",
-    instagramLink: "/#",
-  },
+  // {
+  //   id: 5,
+  //   name: "M. Rafi Rafsanzani",
+  //   designation: "66 PLSI / MMSI",
+  //   image: "/images/team/team-05.jpg",
+  //   facebookLink: "/#",
+  //   twitterLink: "/#",
+  //   instagramLink: "/#",
+  // },
 
   
 ];
