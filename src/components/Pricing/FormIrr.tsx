@@ -41,7 +41,7 @@ function FormIRR() {
       status         = 'Layak'
     }
 
-    const stringDesc = 'Dengan nilai proyeksi IRR dengan tingkat diskonto '+numReinvestmentRateNum+ ' % selama '+numUmurTahunanNum+' tahun, maka investasi tersebut mendapat pengembalian sebanyak '+nilaiIRR.toFixed(2)+' %. Maka, investasi tersebut dikatakan '+status
+    const stringDesc = 'Dengan nilai proyeksi IRR dengan tingkat diskonto '+numReinvestmentRateNum+ ' % dan suku bunga '+numSukuBunganNum+ ' % selama '+numUmurTahunanNum+' tahun, maka investasi tersebut mendapat pengembalian sebanyak '+nilaiIRR.toFixed(2)+' %. Maka, investasi tersebut dikatakan '+status
     return stringDesc
   }
 
