@@ -34,7 +34,7 @@ function FormPI() {
     var status        = 'Tidak Layak'
     var statusBesaran = 'lebih kecil'
 
-    if(nilaiPI > 1){
+    if(nilaiPI >= 1){
       status        = 'LAYAK'
       statusBesaran = 'lebih besar'
     }
@@ -44,20 +44,17 @@ function FormPI() {
   }
 
   const handlePI = (): number => {
-    var resultNpv: number= 0;  
-    var finalNpv: number = 0;
+    var npv: number = 0;
   
     for (var i = 0; i < dataLaba.length; i++) {
-      var pembagiNpv = Math.pow(1 + numSukuBunganNum / 100, i + 1);
-      var valueAliranMasuk = strCurrencyToInt(dataLaba[i]) + hitungDepresiasiTahunan();
-      var result = valueAliranMasuk / pembagiNpv;
-      resultNpv += result;
+      const discountFactor = Math.pow(1 + numSukuBunganNum / 100, i + 1);
+      const cashFlow = strCurrencyToInt(dataLaba[i]) + hitungDepresiasiTahunan();
+      npv += cashFlow / discountFactor;
     }
   
-    finalNpv = resultNpv / (pembelianAktivaTetapNum);
-  
-    return finalNpv
-  }
+    const profitabilityIndex = npv / pembelianAktivaTetapNum;
+    return profitabilityIndex;
+  };
   
 
   return (

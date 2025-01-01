@@ -38,10 +38,10 @@ export default function FormPaybackPeriod() {
     var status        = 'Tidak Layak'
 
     if(nilaiPP <= numPaybackNum){
-      status        = 'LAYAK'
+      status        = 'Layak'
     }
 
-    const stringDesc = 'Periode pengembalian modal untuk investasi tersebut adalah '+nilaiPP + ' Tahun , sehingga investasi ini dikatakan '+status;
+    const stringDesc = 'Periode pengembalian modal untuk investasi tersebut adalah '+nilaiPP.toFixed(2) + ' Tahun , sehingga investasi ini dikatakan '+status;
     return stringDesc
   }
 
@@ -57,25 +57,36 @@ export default function FormPaybackPeriod() {
   }
 
   const handlePaybackPeriode = (valueKasMasuk: number[]): number => {
+    var kasTahunKeN: number = 0;
+    var kasPayback: number = 0;
+    var numPaybackNum: number = 0;
+  
+    for (var i = 0; i < valueKasMasuk.length; i++) {
+      var cumulativeCashFlow = 0;
+  
+      for (var j = 0; j <= i; j++) {
+        cumulativeCashFlow += valueKasMasuk[j];
+      }
+  
+      if (cumulativeCashFlow >= pembelianAktivaTetapNum) {
+        numPaybackNum = i;
+        kasTahunKeN = cumulativeCashFlow - valueKasMasuk[i]; 
 
-    var kasTahunPembagi: number     = 0
-    var kasPayback:number           = 0
-    var finalPaybackPeriode:number  = 0
-
-    for (let i = 0; i < valueKasMasuk.length; i++) {
-      
-      if (i != valueKasMasuk.length - 1) {
-        if(i == (numPaybackNum - 2)){
-          kasTahunPembagi = valueKasMasuk[i]
+        if (i > 0) {
+          kasPayback = valueKasMasuk[i];
+        } else {
+          kasPayback = cumulativeCashFlow; 
         }
-        if((i+1) == (numPaybackNum)){
-          kasPayback        = valueKasMasuk[i]
-        }
+        break;
       }
     }
-
-    finalPaybackPeriode = numPaybackNum + ((pembelianAktivaTetapNum - kasTahunPembagi)/ (kasPayback - kasTahunPembagi)) * 1
-    return finalPaybackPeriode;
+  
+    if (numPaybackNum === 0) {
+      return 0;
+    } else {
+      const fractionalYear = (pembelianAktivaTetapNum - kasTahunKeN) / kasPayback;
+      return numPaybackNum + fractionalYear;
+    }
   }
 
   return (
@@ -105,7 +116,7 @@ export default function FormPaybackPeriod() {
                           id="outlined-disabled"
                           label={title}
                           fullWidth
-                          value={handlePaybackPeriode(handleAliranKasMasuk()) + ' Tahun'}
+                          value={handlePaybackPeriode(handleAliranKasMasuk()).toFixed(2) + ' Tahun'}
                         />
                       ): title ===  "Kesimpulan" ? (
                         <Typography>

@@ -30,18 +30,19 @@ function FormArr() {
   const numRasioArrNum           = numRasioArr ? strCurrencyToInt(numRasioArr) : 0
 
   const handleHitungInitialInvestment = () => {
-    const nilaiArr = (((averageLaba/rataRataInvestasi) * 100) / 100)
+    const nilaiArr = (((averageLaba/rataRataInvestasi) * 100))
     return nilaiArr
   }
 
   const describeArr = (nilaiArr : number) => {
-    var status        = 'Tidak Layak'
-
+    var status        = 'Layak'
+    console.log(nilaiArr)
+    console.log(numRasioArrNum)
     if(nilaiArr <= numRasioArrNum){
-      status        = 'LAYAK'
+      status        = 'Tidak Layak'
     }
 
-    const stringDesc = 'ARR (Average Rate of Return) sebesar '+nilaiArr.toFixed(2)+'% dari investasi tersebut maka dapat dikatakan '+status;
+    const stringDesc = 'ARR (Average Rate of Return) sebesar '+nilaiArr.toFixed(2)+' % dari investasi tersebut maka dapat dikatakan '+status;
     return stringDesc
   }
   

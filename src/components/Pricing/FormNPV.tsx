@@ -35,7 +35,7 @@ function FormNPV() {
     var status        = 'Tidak Layak'
     var statusBesaran = 'lebih kecil'
 
-    if(nilaiNpv > 1){
+    if(nilaiNpv >= 1){
       status        = 'LAYAK'
       statusBesaran = 'lebih besar'
     }

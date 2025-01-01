@@ -5,6 +5,7 @@ import React from 'react'
 function FormIRR() {
   const headerTableNPV = [
     "Suku Bunga",
+    "Reinvestment Rate",
     "Internal Rate Of Return",
     "Kesimpulan"
   ]
@@ -14,14 +15,14 @@ function FormIRR() {
   const numNilaiSisa            = localStorage.getItem('numNilaiSisa')
   const numUmurTahunan          = localStorage.getItem('numRows')
   const numSukuBunga            = localStorage.getItem('numSukuBunga')
-  const numRasiArr              = localStorage.getItem('numRasio1')
+  const numReinvestmentRate     = localStorage.getItem('numReinvestmentRate')
 
   const dataLaba                = storedValue ? JSON.parse(storedValue) : []
   const pembelianAktivaTetapNum = pembelianAktivaTetap ? strCurrencyToInt(pembelianAktivaTetap) : 0
   const numNilaiSisaNum         = numNilaiSisa ?  strCurrencyToInt(numNilaiSisa) : 0
   const numUmurTahunanNum       = numUmurTahunan ? strCurrencyToInt(numUmurTahunan) : 0
   const numSukuBunganNum        = numSukuBunga ? strCurrencyToInt(numSukuBunga) : 0
-  const numRasiArrNum            = numRasiArr ? strCurrencyToInt(numRasiArr) : 0
+  const numReinvestmentRateNum  = numReinvestmentRate ? strCurrencyToInt(numReinvestmentRate) : 0
 
   const hitungDepresiasiTahunan = () => {
     if (pembelianAktivaTetapNum && numNilaiSisaNum && numUmurTahunanNum) {
@@ -37,10 +38,10 @@ function FormIRR() {
     var status       = 'Tidak Layak'
 
     if(nilaiIRR > numSukuBunganNum){
-      status         = 'LAYAK'
+      status         = 'Layak'
     }
 
-    const stringDesc = 'Dengan nilai proyeksi IRR dengan tingkat diskonto '+numRasiArrNum+ ' % selama '+numUmurTahunanNum+' tahun, maka investasi tersebut mendapat pengembalian sebanyak '+nilaiIRR.toFixed(2)+' %. Maka, investasi tersebut dikatakan '+status
+    const stringDesc = 'Dengan nilai proyeksi IRR dengan tingkat diskonto '+numReinvestmentRateNum+ ' % selama '+numUmurTahunanNum+' tahun, maka investasi tersebut mendapat pengembalian sebanyak '+nilaiIRR.toFixed(2)+' %. Maka, investasi tersebut dikatakan '+status
     return stringDesc
   }
 
@@ -63,11 +64,19 @@ function FormIRR() {
 
   const handleIRR = (): number => {
 
-    const arr1      = presentValue(numSukuBunganNum)
-    const arr2      = presentValue(numRasiArrNum)
-    const irr       = (numSukuBunganNum/100) + (arr1 * ((numSukuBunganNum/100) - (numRasiArrNum/100)) / (arr1 - (-(arr2))))
+    const arr1 = presentValue(numSukuBunganNum);
+    const arr2 = presentValue(numReinvestmentRateNum);
   
-    return irr
+    if (arr1 === arr2) {
+      return numSukuBunganNum / 100; 
+    }
+  
+    const irr =
+      (numSukuBunganNum / 100) +
+      (arr1 * ((numSukuBunganNum / 100) - (numReinvestmentRateNum / 100))) /
+        (arr1 - arr2);
+  
+    return irr;
   }
   
 
@@ -92,7 +101,15 @@ function FormIRR() {
                           fullWidth
                           value={numSukuBunganNum+' %'}
                         />
-                      ): title ===   "Internal Rate Of Return" ? (
+                      ): title ===   "Reinvestment Rate" ? (
+                        <TextField
+                          disabled
+                          id="outlined-disabled"
+                          label={title}
+                          fullWidth
+                          value={numReinvestmentRate+' %'}
+                        />
+                      ):title ===   "Internal Rate Of Return" ? (
                         <TextField
                           disabled
                           id="outlined-disabled"

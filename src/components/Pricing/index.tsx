@@ -198,6 +198,8 @@ const Pricing = () => {
 
     localStorage.clear();
     setFormNext(false)
+
+   
   }
 
   const handleRasio1 = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -703,7 +705,7 @@ const Pricing = () => {
                       label="Rasio ARR (0.0)(%)"
                       value={numRasio1}
                       onChange={handleRasio1}
-                      onBlur={() => handleValidationPresentase('rasioARR',numReinvestmentRate)}
+                      onBlur={() => handleValidationPresentase('rasioARR',numRasio1)}
                       helperText={errorRasio1 ? helperTextNumRasio1 : ''}
                       error={errorRasio1}
                     />
@@ -754,6 +756,7 @@ const Pricing = () => {
                               </Table>
                             </TableContainer>
                               <Stack direction="row" spacing={2}>
+                                  
                                   <Button
                                       variant="contained" 
                                       endIcon={<SendIcon />}
@@ -771,6 +774,8 @@ const Pricing = () => {
                                     >
                                     Hapus Data Investasi
                                   </Button>
+                              
+                                  
                               </Stack>
                           </Grid>
                         </Grid>
