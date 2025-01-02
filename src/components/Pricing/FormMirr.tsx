@@ -14,7 +14,6 @@ function FormMirr() {
   const numNilaiSisa            = localStorage.getItem('numNilaiSisa')
   const numUmurTahunan          = localStorage.getItem('numRows')
   const numSukuBunga            = localStorage.getItem('numSukuBunga')
-  const numPayback              = localStorage.getItem('numPayback')
   const numReinvestmentRate     = localStorage.getItem('numReinvestmentRate')
   const kebutuhanModalKerja     = localStorage.getItem('kebutuhanModalKerja')
 
@@ -23,7 +22,6 @@ function FormMirr() {
   const numNilaiSisaNum         = numNilaiSisa ?  strCurrencyToInt(numNilaiSisa) : 0
   const numUmurTahunanNum       = numUmurTahunan ? strCurrencyToInt(numUmurTahunan) : 0
   const numSukuBunganNum        = numSukuBunga ? strCurrencyToInt(numSukuBunga) : 0
-  const numPaybackNum           = numPayback ? strCurrencyToInt(numPayback) : 0
   const numReinvestmentRateNum  = numReinvestmentRate ? strCurrencyToInt(numReinvestmentRate) : 0
   const kebutuhanModalKerjaNum  = kebutuhanModalKerja ? strCurrencyToInt(kebutuhanModalKerja) : 0
 
@@ -48,37 +46,48 @@ function FormMirr() {
     return stringDesc
   }
 
-  const cashFlows = (dataLaba: string[]): number[] => {
-    var getDataLaba = dataLaba;
-    return getDataLaba.map((cf) => {
-      const arusKasMasuk = strCurrencyToInt(cf) + hitungDepresiasiTahunan();
-      return arusKasMasuk;
+  const getCashFlows = (dataLaba: string[]): number[] => {
+    return dataLaba.map((cf, i) => {
+      var arusKasMasuk = 0
+  
+      if (i === dataLaba.length - 1) {
+        arusKasMasuk = strCurrencyToInt(cf) + hitungDepresiasiTahunan()+ numNilaiSisaNum
+      } else {
+        arusKasMasuk = strCurrencyToInt(cf) + hitungDepresiasiTahunan() 
+      }
+  
+      return arusKasMasuk
     });
   };
+  
+ 
+  const cashFlowsArray = getCashFlows(dataLaba);
+  const year           = (numUmurTahunanNum - 1)
+
+  const fvPositiveCashFlows = cashFlowsArray.reduce((fv, cf, t) => {
+    if (cf > 0) {
+      fv += cf * Math.pow(1 + (numReinvestmentRateNum / 100), year - t);
+    }
+    return fv;
+  }, 0);
+  
+  const pvNegativeCashFlows = cashFlowsArray.reduce((pv, cf, t) => {
+    if (cf < 0) {
+      pv += cf / Math.pow(1 + numSukuBunganNum, t);
+    }
+
+    if (pv == 0){
+      pv = kebutuhanModalKerjaNum
+    }
+    return pv;
+  }, 0);
+
+
 
   function handleMIRR(): number {
-    var getCashFlows = cashFlows(dataLaba)
-
-    const n = getCashFlows.length - 1
-  
-    var terminalValue = 0;
-    for (var t = 1; t <= n; t++) {
-      if (getCashFlows[t] > 0) {
-        terminalValue += getCashFlows[t] * Math.pow(1 + numReinvestmentRateNum, n - t)
-      }
-    }
-  
-    var presentValueCost = 0
-    for (var i = 0; i <= n; i++) {
-      if (getCashFlows[i] < 0) {
-        presentValueCost += getCashFlows[i] * Math.pow(1 + numSukuBunganNum, i)
-      }else{
-        presentValueCost = kebutuhanModalKerjaNum
-      }
-    }
-  
-    const MIRR = Math.pow(terminalValue / Math.abs(presentValueCost), 1 / n) - 1;
-    return MIRR / 100;
+    const mirr = Math.pow(fvPositiveCashFlows / Math.abs(pvNegativeCashFlows), 1 / year) - 2
+    const getMirr = (mirr * 100)
+    return getMirr
   }
   
 
