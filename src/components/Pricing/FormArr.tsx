@@ -36,8 +36,6 @@ function FormArr() {
 
   const describeArr = (nilaiArr : number) => {
     var status        = 'Layak'
-    console.log(nilaiArr)
-    console.log(numRasioArrNum)
     if(nilaiArr <= numRasioArrNum){
       status        = 'Tidak Layak'
     }

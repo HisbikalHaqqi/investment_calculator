@@ -34,9 +34,13 @@ function TableAliranKasMasuk({numRows}:{numRows: number}) {
     }
   };
 
-  const hitungAliranMasuk = (laba:number,penyusutan:number) => {
+  const hitungAliranMasuk = (laba:number,penyusutan:number, index:number) => {
     var valueAliranMasuk = 0
     valueAliranMasuk = laba + penyusutan
+
+    if((dataArray.length - 1 ) === index){
+      valueAliranMasuk = valueAliranMasuk + numNilaiSisaNum
+    }
 
     return valueAliranMasuk
 
@@ -79,7 +83,7 @@ function TableAliranKasMasuk({numRows}:{numRows: number}) {
                             id="outlined-disabled"
                             label={title}
                             fullWidth
-                            value={formatNumberWithCommas((hitungAliranMasuk(strCurrencyToInt(item),hitungDepresiasiTahunan()).toString()))}
+                            value={formatNumberWithCommas((hitungAliranMasuk(strCurrencyToInt(item),hitungDepresiasiTahunan(),index).toString()))}
                           />
                         ) : (
                           <TextField disabled id="outlined-disabled" label={title} fullWidth />
